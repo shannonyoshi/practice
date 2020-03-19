@@ -14,3 +14,78 @@ Input: (6->1->7) + (2->9->5). That is 617 + 295.
 Output: 9->1->2. That is 912
 
 */
+
+class Node {
+    constructor(data, next = null) {
+      this.data = data;
+      this.next = next;
+    }
+  }
+  
+  class LinkedList {
+    constructor() {
+      this.head = null;
+    }
+    print(additionalDescription="") {
+      let current = this.head;
+      let values = []
+      while (current) {
+        values.push(current.data)
+        current = current.next;
+      }
+      console.log(`${additionalDescription} LinkedList Data: ${values}`)
+    }
+  
+    addToTail(data) {
+      const newNode = new Node(data);
+      if (!this.head) {
+        this.head = newNode;
+      } else {
+        let tail = this.head;
+        while (tail.next) {
+          tail = tail.next;
+        }
+        tail.next = newNode;
+      }
+    }
+  }
+
+const sum = (linked1, linked2) => {
+    returnList = new LinkedList()
+    current1=linked1.head
+    current2=linked2.head
+    currSum = 0
+    while (current1 || current2 || currSum > 0) {
+        if (current1) {
+            currSum+=current1.data
+            current1 = current1.next
+        }
+        if (current2) {
+            currSum+=current2.data
+            current2= current2.next
+        }
+        nodeVal = currSum%10
+        currSum -=nodeVal
+        returnList.addToTail(nodeVal)
+        if (currSum >=10) {
+            currSum= currSum/10
+        }
+    }
+
+    return returnList
+}
+
+linkedList1 = new LinkedList();
+nodeData = [7,1,6];
+for (let i = 0; i < nodeData.length; i++) {
+  linkedList1.addToTail(nodeData[i]);
+}
+
+linkedList2 = new LinkedList();
+nodeData = [5,9,2];
+for (let i = 0; i < nodeData.length; i++) {
+  linkedList2.addToTail(nodeData[i]);
+}
+
+list = sum(linkedList1, linkedList2)
+list.print()
